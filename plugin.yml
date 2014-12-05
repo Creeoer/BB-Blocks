@@ -1,0 +1,10 @@
+name: BBBlocks
+version: 0.0.3
+main: me.creeoer.bb.main.BB
+depend: [Vault, WorldEdit]
+
+commands:
+  bb:
+   description: Contains command used for creating schematics
+
+ 
