@@ -7,24 +7,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import me.creeoer.bb.main.BB;
 import me.ryanhamshire.GriefPrevention.Claim;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-
 import org.bukkit.entity.Player;
 
 import com.massivecraft.factions.entity.BoardColls;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.UPlayer;
-
+import com.palmergames.bukkit.towny.Towny;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.TownBlock;
+import com.palmergames.bukkit.towny.object.TownyUniverse;
+import com.palmergames.bukkit.towny.object.TownyWorld;
+import com.palmergames.bukkit.towny.object.WorldCoord;
 import com.sk89q.worldedit.CuboidClipboard;
 import com.sk89q.worldedit.data.DataException;
-
 import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
-
 import com.sk89q.worldguard.protection.managers.RegionManager;
 
 public class LandChecker{
@@ -35,10 +41,11 @@ public class LandChecker{
  	
  	
  
-     public boolean canPlayerPlaceSchematic(String schematicname, Player player) throws DataException, IOException, FileNotFoundException {	
+     public boolean canPlayerPlaceSchematic(String schematicname, Player player) throws DataException, IOException, FileNotFoundException, NotRegisteredException {	
         boolean fac = false;
         boolean world = false;
         boolean grief = false;
+        boolean town = false;
     	 BB main = BB.getInstance();
  	     File schematicsave = new File(main.getDataFolder() + File.separator + "schematics" + File.separator + schematicname + ".schematic");
  	     
@@ -144,10 +151,33 @@ public class LandChecker{
          
         	 
         	 
+        	 if (main.getTowny() != null) {
+        		 if (isPlayerTown(ploc, player) == false ||
+                	     isPlayerTown(xx, player) == false ||
+                	     isPlayerTown(ookla, player) == false ||
+                	     isPlayerTown(sas, player) == false ||
+                	     isPlayerTown(zz, player) == false ||
+                	     isPlayerTown(bookla, player) == false ||
+                	     isPlayerTown(stun, player) == false ||
+                	     isPlayerTown(bb, player) == false ||
+                	     isPlayerTown(sass, player) == false ||
+                	     isPlayerTown(ass, player) == false ||
+                	     isPlayerTown(ss, player) == false ||
+                	     isPlayerTown(WOAH, player) == false ||
+                	     isPlayerTown(mooning,player) == false
+        				 ) {
+        			 town = false;
+        		 } else {
+        			 town = true;
+        		 }
+        		 
+        	 } else {
+        		
+        		 town = true;
+        	 }
         	 
         	 
-        	 
-        	 
+           	 
         	 
          
          
@@ -175,14 +205,12 @@ public class LandChecker{
         		 world = true;
         	 }
         	    
-        
-   
         	 } else {
         		 world = true;
         	 }
 	
          
-           if (world == true && fac == true && grief == true) {
+           if (world == true && fac == true && grief == true && town == true) {
         	   return true;
            } else {
         	   
@@ -291,4 +319,30 @@ public class LandChecker{
      }
     
  }
+ 
+public boolean isPlayerTown(Location sas, Player player) throws NotRegisteredException {
+BB main = BB.getInstance();
+
+if(main.getTowny() == null) {
+	return true;
+}
+
+//Nothing
+
+
+
+if(!TownyUniverse.isWilderness(sas.getBlock())) {
+	//Yup prints the townName at that location
+    List<Resident> residents = TownyUniverse.getTownBlock(sas).getTown().getResidents();
+    for(Resident ress : residents)
+    	if(ress.getName().toString().equals(player.getName().toString())) {
+    		return true;
+    	}
+    return false;
+ 
+}
+return true;
+
+}
+
 }

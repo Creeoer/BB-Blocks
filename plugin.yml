@@ -1,5 +1,5 @@
 name: BBBlocks
-version: 0.0.3
+version: 0.3.5
 main: me.creeoer.bb.main.BB
 depend: [Vault, WorldEdit]
 
