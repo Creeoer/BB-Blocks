@@ -6,16 +6,23 @@ import java.io.File;
 
 
 
+
+
+import java.io.IOException;
+
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.massivecraft.factions.Factions;
+import com.palmergames.bukkit.towny.Towny;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 
@@ -36,7 +43,13 @@ public class BB extends JavaPlugin {
     	  if(!getDataFolder().exists()) {
     		  getDataFolder().mkdir();
     		  new File(getDataFolder() + File.separator + "schematics").mkdirs();
-    		// new File(getDataFolder()+ File.separaotr + "schematics" );
+    		  
+			 
+    	
+    		  getConfig().options().copyDefaults(true);
+    		  saveConfig();
+    		
+   
     				
     	  } 
     	  
@@ -88,7 +101,13 @@ public GriefPrevention getGriefPrevention() {
  
  			
  			
- 	
+ public Towny getTowny() {
+	 Plugin plugin = getServer().getPluginManager().getPlugin("Towny");
+	 if(plugin == null || !(plugin instanceof Towny)) {
+		 return null;
+	 }
+	 return (Towny) plugin;
+ }
  	
  	
  	//Sets up vault economy

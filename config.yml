@@ -1,0 +1,3 @@
+Options:
+#Put your desired material that bb blocks should be made of       #after "Material." MUST BE IN ALL CAPS and have _ where spaces  #are present 
+  bb_material: BEDROCK
